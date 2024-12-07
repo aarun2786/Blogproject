@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block user %}
+
+    
+    {% if not request.user.is_authenticated %}
+        {{block.super}}    
+
+    {% else %}
+        <div class="d-flex gap-2" >
+            <a href="http://"><button class="btn bg-danger" type="button">Login</button></a>
+            <a href="http://"><button class="btn bg-success " type="button">Signup</button></a>
+        </div>
+    {%  endif %}
+
+{% endblock %}
+
+{% block main %}
+<div class="form-box">
+    <form id="fm" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <textarea name="tt" class="tt"></textarea>
+        <button id="bkt" type="submit">submit</button>
+    </form>
+</div>
+{% endblock %}
+
