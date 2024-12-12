@@ -16,12 +16,16 @@
 {% endblock %}
 
 {% block main %}
+<h2>Create Post</h2>
 <div class="form-box">
+    
     <form id="fm" method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <textarea name="tt" class="tt"></textarea>
-        <button id="bkt" type="submit">submit</button>
+        {{form.title}}
+        {{form.tag}}
+        {{form.content}}
+        <button id="bkt" class="btn btn-primary" type="submit">Post</button>
+        <button id="bkt" class="btn btn-primary" type="submit">Save Draft</button>
     </form>
 </div>
 {% endblock %}
