@@ -13,4 +13,3 @@ class PostForm(forms.ModelForm):
             'tag':forms.SelectMultiple(attrs={'class':"form-select mb-2"},choices=[(tag.tag_name,tag.id)  for tag in Tag.objects.all()]),
             'content':forms.Textarea(attrs={"class":"tt"})
         }
-        label  ={'tag':""}
