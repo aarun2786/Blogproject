@@ -44,6 +44,7 @@ nav {
 main {
     grid-area: main;
     overflow: auto;
+    padding: 15px;
     
     
 
@@ -75,6 +76,7 @@ aside {
     margin: 30px;
     column-count: 3;
     gap: 15px;
+    
 
 }
 
@@ -84,10 +86,12 @@ aside {
     margin: 0px 0px 20px 0px;
     max-width: 350px;
     justify-self: center;
-    height:100%t;
-    break-inside: avoid;
+    height:100%;
+    align-self:left;
+    break-inside:avoid;
 }
 .post-card .post-card-image{
+    height: 250px;
 }
 .post-card-image img{
     width: 100%;
@@ -96,8 +100,14 @@ aside {
     aspect-ratio: 1/1;
 }
 .post-card .title{
-    word-break: break-all;
-    max-height: 50px;
+    font-weight: bolder;
+    font-size: 20px;
+    height: 100%;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-height: 60px;
     padding: 0 10px;
 }
 .post-card .post-card-content{
@@ -174,189 +184,32 @@ aside {
     }
   }
 .form-box{
-    margin-top: 50px;
-    padding-left:10px;
+    
 }
 .summernote-div{
     width: 100%;
 }
+.note-editing-area{
+    height: 300px;
+}
 /*----------------------------------------Tag view---------------------------------------------*/
- .tags-grid{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 50px;
- }
+
 .tags{
-    
+    padding: 0 0 5px 0;
+    margin: 30px;
     display: flex;
+    border-bottom: black 2px solid;
     gap: 10px;
     list-style: none;
-    margin-bottom: 50px;
 }
-.taged-post{
-    height: 400px;
-    width: 100% ;
-    max-width: 1000px;
-    display: grid;
-    grid-template-columns: 500px 1fr;
-    grid-template-rows: 70px 50px auto auto 60px;
-    grid-template-areas: 
-    "image  detail"
-    "image  tag"
-    "image  title"
-    "image  -content"
-    "image  -bottom"
-    ;
+
+.tags  a{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(231,18,131,0.9873882902770483) 0%, rgba(255,169,0,1) 100%);
+    width:  max-content;
+    padding: 2px 6px;
+    border-radius: 45px;
     
-    border: 2px solid black;
-    margin-bottom: 50px;
 }
-.taged-post .post-card-image{
-    grid-area: image;
-    grid-row: 1/6;
-    padding: 0;
-}
-.post-card-image img{
-    object-fit: fill;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 16/9;
-}
-.taged-post .post-detail{
-    grid-area: detail;
-    padding: 15px;
-    width: 100%;
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 75px 1fr;
-    grid-template-rows: 25px 25px;
-}
-.taged-post .tag{
-    grid-area: tag;
-    padding: 15px;
-    width: 100%;
-}
-.taged-post .title{
-    grid-area: title;
-    padding: 15px;
-    width: auto;
-    font-size: 35px;
-}
-.taged-post .post-card-content{
-    grid-area: -content;
-    padding: 15px;
-    width: 100%;
-    height: 100%;
-    white-space:wrap;
-    overflow: hidden;
-    padding: 5px 20px;
-    text-overflow: ellipsis;
-    font-size: 20px;
-}
-.taged-post .bttom{
-    grid-area: -bottom;
-    display: flex;
-    border-top: 1px solid black;
-    place-items: center;
-    margin: 0;
-    gap:15px;
-    padding: 0 15px;
-    width: 100%;
-}
-.taged-post .bttom :last-child{
-    margin-left: auto;
-}
-@media screen and (max-width: 1260px) {
-    aside {
-      display: none;
-    }
-    body {
-        display: grid;
-        grid-template-columns:  1fr;
-        grid-template-rows:  80px 1fr;
-        grid-template-areas: 
-            "nav"
-            "main";
-    }
-    .tags-grid{
-        width: 100%;
-        align-items: center;
-        margin: 0px 0px;
-
-    }
-    .taged-post{
-        width: 100%;
-    }
-
-  }
-  @media screen and (max-width: 855px) {
-    .taged-post {
-        display: flex;
-        flex-direction: column;
-        border-radius: 5px;
-        background-color: white;
-        border: 2px solid rgb(198, 195, 195);
-        overflow: hidden;
-        width: 350px;
-        height: 460px;
-    }
-    .tags-grid{
-        width: 100%;
-        align-items: center;
-        margin: 0px 0px;
-
-    }
-    .taged-post .post-card-image{
-        width: 100%;
-        max-width: 350px;
-        height: 200px;
-        padding: 0;
-    }
-    .post-card-image img{
-        object-fit: fill;
-        width: 100%;
-        height: 100%;
-    }
-    .taged-post .post-detail{
-        margin-top: 10px;
-        display: grid;
-        grid-template-columns: 75px 1fr;
-        grid-template-rows: 25px 25px;
-        padding: 5px 15px;
-    }
-    .taged-post .tag{
-        padding: 5px  15px;
-        font-size:large;
-        
-
-    }
-    .taged-post .title{
-        word-break: break-all;
-        font-size: 25px;
-        padding:5px  10px;
-        background-color: rgba(255, 255, 255,0.9);
-        color: rgb(0, 0, 0);
-    }
-    .taged-post .post-card-content{
-        background-color: rgba(255, 255, 255,0.9);
-        white-space:nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        height: auto;
-        color: rgb(16, 0, 0);
-        font-size: 15px;
-        padding: 5px 15px;
-        word-break: break-all;
-    }
-    .taged-post .bttom{
-        padding: 20px 0;
-        margin: 0 20px;
-        gap: 50px;
-        border-top: 1px solid black;
-        display: flex;
-        justify-content: center;
-    }
-
-  }
