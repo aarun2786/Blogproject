@@ -1,15 +1,37 @@
 {% extends 'base.html' %}
 {% block nav %}
-    <div class="navlog" >BlogApp</div>
+    <i id="navbtn" class="fa-solid fa-bars px-3 fs-3 align-middle"></i>
+    <div class="navlog" ><h3>BlogApp</h3></div>
     <div class="nav-srch" >
         <input class="form-control" type="text">
-        <button class="btn bg-primary " >sdfsd</button>
+        <button class="nav-srch-btn btn btn-outline-primary " ><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
     <div class="nav-btn" >
         <button class="btn bg-info">Sign up</button>
-        <button class="btn bg-danger">Login</button>
+        <button class="btn btn-danger">Login</button>
     </div>
 {% endblock %}
+
+{% block aside %}
+
+    <div class="dropdown">
+        <button id="aside-tag-btn" >Tags</button>
+        <div id="as-tag" class="tag">
+            {% for tag in tags %}
+                <a href="{% url 'tag' tag=tag.tag_name %}">{{tag.tag_name}}</a>
+            {% endfor %}
+            <a href="">123</a>
+            <a href="">Djanog</a>
+            <a href="">#css</a>
+            <a href="">123</a>
+            <a href="">123</a>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
 
 {% block main %}
     
@@ -27,8 +49,7 @@
                 <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
             {% endfor %}
         </div>
-        <div class="title">{{post.title}}</div>
-
+        <a href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
         <div class="bttom" >
             <div class="bts" >View</div>
             <div class="bts" >Comments</div>

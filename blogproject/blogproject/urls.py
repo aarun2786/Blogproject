@@ -26,6 +26,7 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('create-post/', Main,name="create-post"),
     path('categories/<str:tag>',TagsPost,name="tag"),
+    path('post/<str:slug>',post,name="post_view"),
 ]
 
 

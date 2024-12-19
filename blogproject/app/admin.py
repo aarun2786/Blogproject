@@ -7,7 +7,7 @@ class BlogerAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['id','get_tag','bloger','title','content','pub_date']
+    list_display = ['id','get_tag','bloger','title','content','pub_date','slug_fiedl']
 
 
 @admin.register(Comment)

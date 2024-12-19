@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
+{% extends 'home.html' %}
 
 {% block main %}
 
 
     <div class="tags" >
-    {% for tag in all_tag %}
+    {% for tag in tags %}
         <a class="" href="{% url 'tag' tag=tag %}">{{tag}}</a>
     {% endfor %}
     </div>
@@ -23,7 +23,7 @@
                 <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
             {% endfor %}
         </div>
-        <div class="title">{{post.title}}</div>
+                <a href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
 
         <div class="bttom" >
             <div class="bts" >View</div>

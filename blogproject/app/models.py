@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_summernote.fields import SummernoteTextField
 from django.contrib.auth.models import User
 # Create your models here.
@@ -15,10 +16,16 @@ class Post(models.Model):
     title = models.CharField(max_length=500)
     content = SummernoteTextField()
     pub_date = models.DateTimeField()
+    slug_fiedl = models.SlugField()
     def __str__(self):
         return self.title
+    
     def get_tag(self):
         return ",".join(tg.tag_name for tg in self.tag.all())
+    
+    def get_slug(self):
+        return reverse("post_view",kwargs={'slug':self.slug_fiedl})
+
 
 class Comment(models.Model):
     bloger = models.ForeignKey(Bloger,on_delete=models.CASCADE)

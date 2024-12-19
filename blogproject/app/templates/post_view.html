@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% extends 'home.html' %}
+{% block nav %}
+    {{block.super}}
+{% endblock %}
+
+{% block main %}
+<div class="post-view">
+    <h2>{{post.title}}</h2>
+    <p>{{post.bloger}}</p>
+    <p class="fw-bold">Published: {{post.pub_date|date:"Y-m-d"}}</p>
+    <p>{{post.content|safe}}</p>
+</div>
+{% endblock %}

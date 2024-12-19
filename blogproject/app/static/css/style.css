@@ -10,7 +10,7 @@ body {
     bottom: 25px;
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-template-rows: 80px  1fr;
+    grid-template-rows: auto  1fr;
     grid-template-areas: 
         "nav nav"
         "aside main";
@@ -19,26 +19,45 @@ body {
 /*----------------NavBar------------------------------------------------------------*/
 nav {
     grid-area: nav;
+    width: 100%;
     background-color: darkgray;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 25px;
+    padding: 10px;
+    overflow: hidden;
+}
+.fa-bars{
+    display: none;
+}
+nav .navlog{
+    margin-right:20px;
+    
 }
 
-.nav-btn{
-    display: flex;
-    float: left;
-}
-.nav-btn li{
-    display: flex;
-    list-style: none;
-}
+
 .nav-srch{
     display: flex;
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+
 }
-.nav-srch input[type=text]{
+.nav-srch .form-control{
+    padding-right: 45px;
+}
+.nav-srch .nav-srch-btn{
+    display: none;
+}
+
+nav .nav-btn,.nav-srch{
+    margin-left: auto;
+}
+.nav-btn{
+    padding-left: 10px;
     display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    text-wrap:nowrap;
 }
 /*----------------Main------------------------------------------------------------*/
 main {
@@ -49,11 +68,7 @@ main {
     
 
 }
-/*----------------Side Bar------------------------------------------------------------*/
-aside {
-    grid-area: aside;
-    background-color: blueviolet;
-}
+
 
 /*----------------Post Card------------------------------------------------------------*/
 .vLargeTextField {
@@ -79,9 +94,9 @@ aside {
     
 
 }
-
 .post-card {
     border: 1px solid gray;
+    overflow: hidden;
     width: 100%;
     margin: 0px 0px 20px 0px;
     max-width: 350px;
@@ -89,6 +104,7 @@ aside {
     height:100%;
     align-self:left;
     break-inside:avoid;
+    border-radius: 10px;
 }
 .post-card .post-card-image{
     height: 250px;
@@ -140,6 +156,7 @@ aside {
 
 .post-card .tag{
     padding: 0px 10px  0px  10px;
+    color: red;
 }
 .post-card .bttom{
     border-top: 1px solid gray;
@@ -153,17 +170,34 @@ aside {
 .post-card .bttom :last-child{
     margin-left: auto;
 }
+/*----------------------------------------Post View---------------------------------------------*/
+.post-view{
+    width:100%;
+    max-width: 950px;
+    padding: 10px;
+    background-color: azure;
+}
+.post-view img{
+    width: 100%;
+    height: 100%;
+}
+
+
+/*-----------------------------------------------media query -------------------------------*/
 @media screen and (max-width: 1029px) {
     aside {
-      display: none;
+        width: 250px;
+        position: fixed;
+        height: 100vh;
+        display: none;
+
     }
     body {
-        display: grid;
-        grid-template-columns:  1fr;
-        grid-template-rows:  80px 1fr;
-        grid-template-areas: 
-            "nav"
-            "main";
+        grid-template-columns:  1fr;    
+    }
+    .fa-bars{
+        display: block;
+        cursor: pointer;
     }
   }
   @media screen and (max-width: 1279px) {
@@ -182,10 +216,14 @@ aside {
     .post-grid {
         column-count: 1;
     }
+    .form-control{
+        display: none;
+    }
+    .nav-srch .nav-srch-btn{
+        display: block;
+    }
   }
-.form-box{
-    
-}
+/*---------------------------------------SummerNote--------------------------------------------*/
 .summernote-div{
     width: 100%;
 }
@@ -212,4 +250,48 @@ aside {
     padding: 2px 6px;
     border-radius: 45px;
     
+}
+
+/*----------------Side Bar------------------------------------------------------------*/
+aside {
+    grid-area: aside;
+    background-color: whitesmoke;
+    border-right: 2px solid gray;
+    padding: 5px;
+}
+
+aside .dropdown{
+    background: whitesmoke;
+    width: 100%;
+    max-width: 300px;
+    padding:  5px;
+    border-bottom: 2px solid gray ;
+
+}
+
+.dropdown button{
+    width: 100%;
+    padding:  10px;
+    border-radius: 5px;
+    color: floralwhite;
+    font-weight: bolder;
+    text-align: start;
+    background:rgb(135, 135, 135);
+    border: none;
+}
+
+.dropdown .tag{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+
+}
+.dropdown a{
+    background-color: rgb(46, 46, 46);
+    padding: 2px 3px;
+    color:rgb(170, 178, 203);
+    border-radius: 3px;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
 }

@@ -65,27 +65,21 @@ function timeformat(date){
     Math
     //console.log(year,month,day,hour,mintus)
     if(year >= 1){
-        console.log("y")
         return `${year} year ago`
     
     }else if(month >= 1){
-        console.log("m")
         return `${month}mn`
     
     }else if(week >= 1){
-        console.log("w")
         return `${week}w`
     
     }else if(day >= 1){
-        console.log("d")
         return `${day}d`
     
     }else if(hour >= 1){
-        console.log("h")
         return `${hour}hrs`
     
     }else if(mintus >= 1){
-        console.log("m")
     return `${mintus}min`
     
     }else{
@@ -102,9 +96,33 @@ function updateTime(){
     const pubDate = document.querySelectorAll("#pub_date")
     pubDate.forEach((event ) => {
         const date = event.getAttribute("pub_date")
-        console.log(timeformat(date))
         event.textContent = timeformat(date)
     })
 }
 setInterval(updateTime,60000)
 updateTime()
+
+
+
+
+// Side Bar function
+
+
+
+
+
+function hide(element){
+    if (element.style.display === 'block'){
+        element.style.display = 'none'
+    }else{
+        element.style.display = 'block'
+    }
+}
+let aside = document.getElementsByTagName('aside')[0]
+let navbtn = document.getElementById('navbtn')
+navbtn.addEventListener('click', () => hide(aside))
+
+let tags = document.getElementById('as-tag')
+let asideTagBtn = document.getElementById('aside-tag-btn')
+asideTagBtn.addEventListener('click', () => hide(tags))
+
