@@ -184,6 +184,11 @@ main {
 
 
 /*-----------------------------------------------media query -------------------------------*/
+@media screen and (min-width: 1030px) {
+    aside {
+        display: block !important;
+    }
+}
 @media screen and (max-width: 1029px) {
     aside {
         width: 250px;

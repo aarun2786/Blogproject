@@ -27,6 +27,11 @@
             <a href="">123</a>
         </div>
     </div>
+    <div class="recent_post" >
+        {% for post in recent_post %}
+            {{post.title}}
+        {% endfor %}
+    </div>
 
 
 {% endblock %}
@@ -49,7 +54,7 @@
                 <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
             {% endfor %}
         </div>
-        <a href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
+        <a class="  " href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
         <div class="bttom" >
             <div class="bts" >View</div>
             <div class="bts" >Comments</div>

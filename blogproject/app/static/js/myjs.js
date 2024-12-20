@@ -111,18 +111,22 @@ updateTime()
 
 
 
-function hide(element){
-    if (element.style.display === 'block'){
-        element.style.display = 'none'
+function hide(element,value){
+    // for display block
+     const displayStyle = window.getComputedStyle(element).display;
+    if (displayStyle == value && window.innerWidth < 1039 ){
+        element.style.display = 'none';
     }else{
-        element.style.display = 'block'
+        element.style.display = value;
     }
+    
+    
 }
 let aside = document.getElementsByTagName('aside')[0]
 let navbtn = document.getElementById('navbtn')
-navbtn.addEventListener('click', () => hide(aside))
+navbtn.addEventListener('click', () => hide(aside,'block'))
 
-let tags = document.getElementById('as-tag')
+let tags = document.querySelector('.tag')
 let asideTagBtn = document.getElementById('aside-tag-btn')
-asideTagBtn.addEventListener('click', () => hide(tags))
+asideTagBtn.addEventListener('click', () => hide(tags,'flex'))
 

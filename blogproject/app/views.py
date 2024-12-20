@@ -26,8 +26,13 @@ def Main(request):
 def home(request):
     posts = Post.objects.all()
     tags = Tag.objects.all()
+    #recent_post
+    if not 'recent_post' in  request.session:
+        request.session['recent_post'] = []
+    recent_posts = request.session.get('recent_post')
+    recent_post = Post.objects.filter(slug_fiedl__in=recent_posts)
     #return HttpResponse(posts.content)
-    return render(request,'home.html',{'posts':posts,'tags':tags})
+    return render(request,'home.html',{'posts':posts,'tags':tags,"recent_post":recent_post})
 
 
 def TagsPost(request,tag):
@@ -37,6 +42,10 @@ def TagsPost(request,tag):
     return render(request,'tag_view.html',{'posts':posts,"tags":all_tag})
     
 def post(request,slug):
-    print("slug value "+slug)
     post = Post.objects.get(slug_fiedl=slug)
+    
+    recent_activity = request.session.get('recent_post')
+    if slug not in recent_activity:
+        recent_activity.append(slug)
+    request.session['recent_posts'] = recent_activity
     return render(request,'post_view.html',{"post":post})
