@@ -1,0 +1,18 @@
+<div class="dropdown">
+    <button id="aside-tag-btn" >Tags</button>
+    <div id="as-tag" class="tag">
+        {% for tag in tags %}
+            <a href="{% url 'tag' tag=tag.tag_name %}">{{tag.tag_name}}</a>
+        {% endfor %}
+    </div>
+</div>
+<div class="recent_post" >
+    <button id="aside-repost-btn" >Recent Post</button>
+        <div id="as-post" class="post" >
+            {% for post in recent_post %}
+            <a class="text-break" href="{% url 'post_view' slug=post.slug %}">{{post.title}}</a>    
+            {% empty %}
+                <p>No recent Post avilale </p>
+            {% endfor %}
+        </div>
+</div>

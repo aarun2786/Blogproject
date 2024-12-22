@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block nav %}
     <i id="navbtn" class="fa-solid fa-bars px-3 fs-3 align-middle"></i>
     <div class="navlog" ><h3>BlogApp</h3></div>
@@ -13,27 +14,7 @@
 {% endblock %}
 
 {% block aside %}
-
-    <div class="dropdown">
-        <button id="aside-tag-btn" >Tags</button>
-        <div id="as-tag" class="tag">
-            {% for tag in tags %}
-                <a href="{% url 'tag' tag=tag.tag_name %}">{{tag.tag_name}}</a>
-            {% endfor %}
-            <a href="">123</a>
-            <a href="">Djanog</a>
-            <a href="">#css</a>
-            <a href="">123</a>
-            <a href="">123</a>
-        </div>
-    </div>
-    <div class="recent_post" >
-        {% for post in recent_post %}
-            {{post.title}}
-        {% endfor %}
-    </div>
-
-
+    {% include 'asidebar_data.html' %}
 {% endblock %}
 
 
@@ -54,11 +35,11 @@
                 <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
             {% endfor %}
         </div>
-        <a class="  " href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
+        <a class="title-link" href="{% url 'post_view' slug=post.slug %}"><div class="title">{{post.title}}</div></a>
         <div class="bttom" >
-            <div class="bts" >View</div>
-            <div class="bts" >Comments</div>
-            <div class="bts" >Like</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/views.svg' %}" alt="view">{{post.views}}</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/comment.svg' %}" alt="view">{{post.views}}</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/like.svg' %}" alt="view">{{post.views}}</div>
         </div>
     </div>
     {% endfor %}

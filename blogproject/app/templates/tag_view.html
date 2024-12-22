@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 {% extends 'home.html' %}
+{% load static %}
+
+{% block aside %}
+    {% include 'asidebar_data.html' %}
+{% endblock %}
 
 {% block main %}
-
-
     <div class="tags" >
     {% for tag in tags %}
         <a class="" href="{% url 'tag' tag=tag %}">{{tag}}</a>
     {% endfor %}
     </div>
     <div class="post-grid" >
-    {% for post in posts %}
+    {% for post in taged_post %}
     <div class="post-card">
         <div class="main-content" style="display: none;">{{ post.content|safe}}</div>
         <div class="post-detail" >
@@ -23,12 +26,12 @@
                 <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
             {% endfor %}
         </div>
-                <a href="{% url 'post_view' slug=post.slug_fiedl %}"><div class="title">{{post.title}}</div></a>
+                <a class="title-link" href="{% url 'post_view' slug=post.slug %}"><div class="title">{{post.title}}</div></a>
 
         <div class="bttom" >
-            <div class="bts" >View</div>
-            <div class="bts" >Comments</div>
-            <div class="bts" >Like</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/views.svg' %}" alt="view">{{post.views}}</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/comment.svg' %}" alt="view">{{post.views}}</div>
+            <div class="" ><img class="me-1" src="{% static 'assets/like.svg' %}" alt="view">{{post.views}}</div>
         </div>
     </div>
     {% endfor %}

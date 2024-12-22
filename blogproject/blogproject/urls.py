@@ -22,11 +22,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home,name="home"),
-    path('summernote/', include('django_summernote.urls')),
+    path("",HomeView.as_view(),name='home'),
+    path('categories/<str:tag>',TagView.as_view(),name="tag"),
+    path('post/<str:slug>',PostDetailView.as_view(),name="post_view"),
     path('create-post/', Main,name="create-post"),
-    path('categories/<str:tag>',TagsPost,name="tag"),
-    path('post/<str:slug>',post,name="post_view"),
+    
+    
+    path('summernote/', include('django_summernote.urls')),
+    
+    
 ]
 
 

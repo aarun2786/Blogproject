@@ -16,7 +16,8 @@ class Post(models.Model):
     title = models.CharField(max_length=500)
     content = SummernoteTextField()
     pub_date = models.DateTimeField()
-    slug_fiedl = models.SlugField()
+    slug = models.SlugField()
+    views = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.title
     

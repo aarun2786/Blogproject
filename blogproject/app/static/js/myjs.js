@@ -29,7 +29,7 @@ function cardDesign(cardClass){
              for (let i = 0; i<=4; i++){
                 let textNode = document.createTextNode(text[i]);
                 if (textNode.textContent !== "undefined" ){
-                    textNode = document.createTextNode(text[i].innerText+" ")
+                    textNode = document.createTextNode(text[i].innerText)
                     postContent.appendChild(textNode);
                 }
                 
@@ -112,9 +112,8 @@ updateTime()
 
 
 function hide(element,value){
-    // for display block
      const displayStyle = window.getComputedStyle(element).display;
-    if (displayStyle == value && window.innerWidth < 1039 ){
+    if (displayStyle == value ){
         element.style.display = 'none';
     }else{
         element.style.display = value;
@@ -126,7 +125,10 @@ let aside = document.getElementsByTagName('aside')[0]
 let navbtn = document.getElementById('navbtn')
 navbtn.addEventListener('click', () => hide(aside,'block'))
 
-let tags = document.querySelector('.tag')
+let tags = document.getElementById('as-tag')
 let asideTagBtn = document.getElementById('aside-tag-btn')
 asideTagBtn.addEventListener('click', () => hide(tags,'flex'))
 
+let post = document.getElementById('as-post')
+let asideRePstBtn = document.getElementById('aside-repost-btn')
+asideRePstBtn.addEventListener('click', () => hide(post,'flex'))
