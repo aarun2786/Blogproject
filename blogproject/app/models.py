@@ -1,12 +1,12 @@
 from django.db import models
 from django.urls import reverse
 from django_summernote.fields import SummernoteTextField
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,AbstractBaseUser
 # Create your models here.
 class Bloger(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+    profile_image = models.ImageField(upload_to='user_profile',default="user_profile/default.png")
     bio_data = models.CharField(max_length=500)
-
     def __str__(self):
         return self.user.username
 
@@ -15,6 +15,7 @@ class Post(models.Model):
     bloger = models.ForeignKey(Bloger,on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
     content = SummernoteTextField()
+    is_publish = models.BooleanField(default=True)
     pub_date = models.DateTimeField()
     slug = models.SlugField()
     views = models.PositiveIntegerField(default=0)
@@ -25,7 +26,7 @@ class Post(models.Model):
         return ",".join(tg.tag_name for tg in self.tag.all())
     
     def get_slug(self):
-        return reverse("post_view",kwargs={'slug':self.slug_fiedl})
+        return reverse("post_view",kwargs={'slug':self.slug})
 
 
 class Comment(models.Model):

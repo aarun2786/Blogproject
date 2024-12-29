@@ -61,10 +61,9 @@ nav .nav-btn,.nav-srch{
 }
 /*----------------Main------------------------------------------------------------*/
 main {
-    grid-area: main;
+    /* grid-area: main; */
     overflow: auto;
     padding: 15px;
-    
     
 
 }
@@ -105,6 +104,7 @@ main {
     align-self:left;
     break-inside:avoid;
     border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .post-card .post-card-image{
     height: 250px;
@@ -211,6 +211,9 @@ main {
         display: block;
         cursor: pointer;
     }
+    main{
+        width: 100%;
+    }
   }
   @media screen and (max-width: 1279px) {
     .post-grid {
@@ -242,6 +245,9 @@ main {
 .note-editing-area{
     height: 300px;
 }
+.form-box{
+    width: 100%;
+}
 /*----------------------------------------Tag view---------------------------------------------*/
 
 .tags{
@@ -263,6 +269,11 @@ main {
     border-radius: 45px;
     
 }
+.tagSelect{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
 
 /*----------------Side Bar------------------------------------------------------------*/
 aside {
@@ -271,7 +282,7 @@ aside {
     border-right: 1px solid gray;
     padding: 5px;
 }
-aside .dropdown,.recent_post{
+aside .dropdown,.recent_post,.links{
     background: whitesmoke;
     width: 100%;
     max-width: 300px;
@@ -332,5 +343,83 @@ aside .dropdown,.recent_post{
     padding: 2px 2px 2px 0px;
     margin-bottom: 2px;
     font-size: medium;
+}
+.aside-link{
+    width: 100%;
+    background: gainsboro;
+    padding: 10px;
+}
+.aside-link a{
+    text-decoration: none;
+    color: black;
+}
+.aside-link a:hover{
+    color: red;
+}
+/*Login Sinup------------------------------------------------------------*/
+
+.form-group{
+    background-color: whitesmoke;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+    }
+
+.form-group .signup{
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    display: flex;
+    padding-bottom: 20px;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 10px 5px 35px rgb(0, 0, 0)
+
+}
+.form-field{
+    padding: 25px;
+}
+.signup .form-input{
+    width: 100%;
+    height: 50px;
+    background: rgb(225, 225, 225);
+    outline: none;
+    font-size: medium;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+}
+.form-input::placeholder{
+    color: black;
+    font-size: medium;
+}
+.form-input:focus{
+    border-bottom: 3px solid red ;
+}
+.signup button{
+    margin-top: 25px;
+    width: 100%;
+    text-wrap: nowrap;
+    border-radius: 25px;
+}
+.signup .btm-links{
+    margin-top: 60px;
+}
+.signup .form-title{
+    background: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    font-weight: bolder;
+    font-size: xx-large;
+    font-family:Georgia, 'Times New Roman', Times, serif
+
 }
 

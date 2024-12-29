@@ -17,15 +17,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from app.views import *
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",HomeView.as_view(),name='home'),
-    path('categories/<str:tag>',TagView.as_view(),name="tag"),
-    path('post/<str:slug>',PostDetailView.as_view(),name="post_view"),
-    path('create-post/', Main,name="create-post"),
+    path('categories/<str:tag>',login_required(TagView.as_view()),name="tag"),
+    path('post/<str:slug>',login_required(PostDetailView.as_view()),name="post_view"),
+    path('sign-up/',SignUpView.as_view(),name='signup'),
+    path('login/',Loginview.as_view(),name='login'),
+    path('logout/', login_required(Logoutview.as_view()),name="logout"),
+    path('create-post/', login_required(PostCreateView.as_view()),name="create-post"),
     
     
     path('summernote/', include('django_summernote.urls')),

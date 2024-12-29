@@ -3,11 +3,11 @@ from .models import *
 # Register your models here.
 @admin.register(Bloger)
 class BlogerAdmin(admin.ModelAdmin):
-    list_display = ['user','bio_data']
+    list_display = ['id', 'user','bio_data']
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['id','get_tag','bloger','title','content','pub_date','slug','views']
+    list_display = ['id','get_tag','bloger','title','content','pub_date','slug','views','is_publish']
 
 
 @admin.register(Comment)

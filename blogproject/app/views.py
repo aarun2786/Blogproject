@@ -1,6 +1,10 @@
 from django.shortcuts import render,HttpResponse,redirect
-from .forms import PostForm
+from .forms import PostForm,SignupForm,AuthenticationForm
 from django.views import View
+from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth import authenticate,aauthenticate,login,logout
+from django import forms
+from django.views.generic.edit import CreateView
 from django.views.generic import ListView,DetailView
 from .models import *
 import json
@@ -15,7 +19,7 @@ def Main(request):
             #html =fm.cleaned_data['content']
             html = fm.cleaned_data.get('content')
             tag = fm.cleaned_data.get('tag')
-            bloger = Bloger.objects.get(id=1)
+            bloger = Bloger.objects.get(user__username=request.user)
             post = Post.objects.create(bloger=bloger,title=title,content=html,pub_date=datetime.now())
             post.tag.set(tag)
             return redirect('home')
@@ -23,7 +27,35 @@ def Main(request):
     form = PostForm(initial={'content':"Write something"})
     return render(request,'make_post.html',{'form':form})
 
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'make_post.html'
+    form_class = PostForm
+    success_url= "/"
 
+    def get_form(self, form_class = None):
+        form = super().get_form(form_class)
+        form.fields['content'].initial = "Write something"
+        return form
+        
+
+
+    def form_valid(self, form):
+        action = self.request.POST.get('action')        
+        
+        bloger = Bloger.objects.get(user__username=self.request.user)
+        post = form.save(commit=False)
+        post.bloger = bloger
+        post.pub_date = datetime.now()
+        
+        if action == 'save':
+            post.is_publish = False
+        else:
+            post.is_publish = True
+        
+        post.save()
+        
+        return super().form_valid(form)
 
 class HomeView(ListView):
     model = Post
@@ -32,7 +64,8 @@ class HomeView(ListView):
     ordering = '-pub_date'
 
     def get_queryset(self):
-        return Post.objects.all()
+        ojb =  Bloger.objects.all()
+        return Post.objects.filter(is_publish=True)
 
 class TagView(ListView):
     model =Tag
@@ -42,7 +75,7 @@ class TagView(ListView):
 
     def get_queryset(self):
         Post_tag = Tag.objects.get(tag_name=self.kwargs['tag'])
-        posts = Post_tag.posts.all()
+        posts = Post_tag.posts.filter(is_publish=True)
         return posts
     
     def get_context_data(self, **kwargs):
@@ -85,3 +118,31 @@ class PostDetailView(DetailView):
 #     else:
 #         request.session['recent_posts'] = ""
 #     return render(request,'post_view.html',{"post":post})
+
+
+class SignUpView(CreateView):
+    template_name = "signup.html"
+    form_class = SignupForm
+    success_url = '/login'
+
+
+class Loginview(LoginView):
+    template_name = "login_page.html"
+    form_class = AuthenticationForm
+    success_url = "/"
+
+    def get_form(self, form_class = None):
+        form =  super().get_form(form_class)
+        form.fields['username'].widget =forms.TextInput(attrs={'class': 'form-input mb-2', 'placeholder': ' Username'})
+        form.fields['password'].widget =forms.PasswordInput(attrs=({'class': 'form-input mb-2', 'placeholder': ' Password'}))
+        return form
+
+    def form_valid(self, form):
+        login(self.request,form.get_user())
+        return redirect('home')
+
+
+
+class Logoutview(LogoutView):
+    next_page = '/'
+

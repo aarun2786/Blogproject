@@ -1,21 +1,9 @@
-{% extends 'base.html' %}
-
-{% block user %}
-
-    
-    {% if not request.user.is_authenticated %}
-        {{block.super}}    
-
-    {% else %}
-        <div class="d-flex gap-2" >
-            <a href="http://"><button class="btn bg-danger" type="button">Login</button></a>
-            <a href="http://"><button class="btn bg-success " type="button">Signup</button></a>
-        </div>
-    {%  endif %}
-
+{% extends 'home.html' %}
+{% block aside %}
+    {{block.super}}
 {% endblock %}
-
 {% block main %}
+
 <h2>Create Post</h2>
 <div class="form-box">
     
@@ -24,8 +12,8 @@
         {{form.title}}
         {{form.tag}}
         {{form.content}}
-        <button id="bkt" class="btn btn-primary" type="submit">Post</button>
-        <button id="bkt" class="btn btn-primary" type="submit">Save Draft</button>
+        <button id="bkt" class="btn btn-primary" name="action" value="post" type="submit">Post</button>
+        <button id="bkt" class="btn btn-primary" name="action" value="save" type="submit">Save Draft</button>
     </form>
 </div>
 {% endblock %}
