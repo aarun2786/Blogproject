@@ -135,6 +135,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 1000000000
     'image_dimensions': True,  # Allow image resizing
 }"""
 # settings.py
+# settings.py
+
+
 from django_summernote.settings import ATTRIBUTES
 ATTRIBUTES["*"] += ["src",]
 MEDIA_URL = '/media/'  # The base URL for serving media files

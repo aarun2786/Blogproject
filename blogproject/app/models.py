@@ -15,10 +15,12 @@ class Post(models.Model):
     bloger = models.ForeignKey(Bloger,on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
     content = SummernoteTextField()
+    text_content = models.TextField()
     is_publish = models.BooleanField(default=True)
     pub_date = models.DateTimeField()
     slug = models.SlugField()
     views = models.PositiveIntegerField(default=0)
+    
     def __str__(self):
         return self.title
     
@@ -27,7 +29,10 @@ class Post(models.Model):
     
     def get_slug(self):
         return reverse("post_view",kwargs={'slug':self.slug})
-
+    
+    def count_comments(self):
+        return Comment.objects.filter(post=self.id).count()
+    
 
 class Comment(models.Model):
     bloger = models.ForeignKey(Bloger,on_delete=models.CASCADE)
@@ -38,9 +43,7 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=100)
-
     def __str__(self):
         return self.tag_name
-    
     def taged_post(self):
         return ",".join(f"{pt.title} {pt.bloger.user.username}" for pt in self.posts.all())

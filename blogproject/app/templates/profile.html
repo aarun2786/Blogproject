@@ -1,11 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {{html|safe}}
-</body>
-</html>
+{% extends 'home.html' %}
+{% load static %}
+{% block nav %}
+    <i id="navbtn" class="fa-solid fa-bars px-3 fs-3 align-middle"></i>
+    <div class="navlog" ><h3>BlogApp</h3></div>
+    <div class="nav-srch" >
+        <input class="form-control" type="text">
+        <button class="nav-srch-btn btn btn-outline-primary " ><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+    <div class="nav-btn" >
+        {% if user %}
+            <a href="{% url 'create-post' %}">Create</a>
+            <img id="nav-img" class="" src="{{ user.profile_image.url }}" alt="" >
+            <div class="user-menu" id="userMenu" >
+                <a href="{% url 'create-post' %}" >View profile</a>
+                <a href="{% url 'create-post' %}">Create</a>
+                <a href="{% url 'create-post' %}">Create</a>
+                <a href="">
+                    <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button style="width: 100%;" type="submit">Logout</button>
+                    </form>
+                </a>
+            </div>
+            {% else %}
+            <a  href="{% url 'login' %}" ><button class="btn bg-warning" >Login </button></a>
+            <a  href="{% url 'signup' %}" ><button class="btn bg-danger" >Sign up </button></a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block aside %}
+    {% include 'asidebar_data.html' %}
+{% endblock %}
+
+{% block main %}
+    <div class="profile-box" >
+        <div class="user-profile">
+                <img class="user-back" src="https://th.bing.com/th/id/OIP.5wnEVaa7uNRjDGtmcTBVCQHaHa?w=184&h=184&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="">
+                <img class="user-pic" src="http://127.0.0.1:8000/media/user_profile/default.png" alt="">
+        </div>
+        <div class="user-description" >
+                <h3>{{bloger.user.username}}</h3>
+                <p>
+                If you have an image saved in your media directory (e.g., /media/images/my_image.jpg), and you
+                </p>
+        </div>
+        <div class="user-activity" >
+            
+            <h3>Activity</h3>
+            
+            <div class="activity-link" >
+                <button onclick="ToggelTab(0)" >Post</button>
+                <button onclick="ToggelTab(1)">Comments</button>
+            </div>
+            
+            <div class="post-grid tab-content" id="user_profile_pst" >
+                {% for post in user_posts %}
+                    <div class="post-card">
+                            <div class="main-content" style="display: none;">{{ post.content|safe}}</div>
+                            <div class="post-detail" >
+                                <img src="{{post.bloger.profile_image.url}}" alt="">
+                                <p class="bloger-name" >{{post.bloger}}</p>
+                                <p id="pub_date" class="fs-6 text " pub_date="{{post.pub_date|date:'Y-m-d H:i:s'}}"></p>
+                            </div>
+                            <div class="tag" >
+                                {% for tag in post.tag.all %}
+                                    <a class="post-tag" href="{% url 'tag' tag=tag %}">{{tag}}</a>
+                                {% endfor %}
+                            </div>
+                            <a class="title-link" href="{% url 'post_view' slug=post.slug %}" >{{post.title}}</a>
+                            <div class="bttom" >
+                                <div class="" ><img class="me-1" src="{% static 'assets/views.svg' %}" alt="view">{{post.views}}</div>
+                                <div class="" ><img class="me-1" src="{% static 'assets/comment.svg' %}" alt="view">{{post.views}}</div>
+                                <div class="" ><img class="me-1" src="{% static 'assets/like.svg' %}" alt="view">{{post.views}}</div>
+                            </div> 
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div  class="comment-grid tab-content" style="background: rebeccapurple;" >
+                <p>sdf;lsad</p>
+                <p>ksjdfhksadhfiouwefhokhwef</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+                <p>skjdfhsuihwedsfjkweoi</p>
+            </div>
+
+    </div>
+{% endblock %}

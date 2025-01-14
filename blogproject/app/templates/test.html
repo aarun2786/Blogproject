@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Document</title>
+    <style>
+        .box{
+            display: flex;
+            align-items: center;
+            border: 1px solid black;
+        }
+        .link{
+            display: flex;
+            align-items: center;
+
+        }
+        .link img{
+            width: 50px;
+            height: 50px;
+
+        }
+    </style>
 </head>
 <body>
-    {% for post in posts %}
-        {{post.title}}
-        <br>
-    {% endfor %}
-    <br>
+
+    <div class="box" >
+        <a class="link" href="">
+            <img src="media\user_profile\default.png" alt="" srcset="">
+            <p>Arunkumar</p>
+        </a>
+        <p>2024/1/01</p>
+    </div>
     
-    {% for post in tags %}
-        {{post.tag_name}}
-    <br>
-    {% endfor %}
-    <br>
-    {% for post in recent_post %}
-        {{post.title}}
-        <br>
-    {% endfor %}
-    <br>
 </body>
 </html>

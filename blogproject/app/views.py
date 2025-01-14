@@ -1,31 +1,31 @@
 from django.shortcuts import render,HttpResponse,redirect
-from .forms import PostForm,SignupForm,AuthenticationForm
+from .forms import PostForm,SignupForm,AuthenticationForm,CommentForm
 from django.views import View
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth import authenticate,aauthenticate,login,logout
 from django import forms
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,FormView
 from .models import *
 import json
 from datetime import datetime
 # Create your views here.
 
-def Main(request):
-    if request.POST:
-        fm = PostForm(request.POST,request.FILES)
-        if fm.is_valid():
-            title =fm.cleaned_data.get('title')
-            #html =fm.cleaned_data['content']
-            html = fm.cleaned_data.get('content')
-            tag = fm.cleaned_data.get('tag')
-            bloger = Bloger.objects.get(user__username=request.user)
-            post = Post.objects.create(bloger=bloger,title=title,content=html,pub_date=datetime.now())
-            post.tag.set(tag)
-            return redirect('home')
+class ProfileView(ListView):
+    model = Bloger
+    template_name='profile.html'
+    context_object_name ='bloger'
+    
+    def get_queryset(self):
+        bloger = Bloger.objects.get(user=self.request.user)
+        
+        return bloger
 
-    form = PostForm(initial={'content':"Write something"})
-    return render(request,'make_post.html',{'form':form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        bloger = self.get_queryset()
+        context['user_posts'] = posts = Post.objects.filter(bloger=bloger.id)
+        return context
 
 class PostCreateView(CreateView):
     model = Post
@@ -38,24 +38,21 @@ class PostCreateView(CreateView):
         form.fields['content'].initial = "Write something"
         return form
         
-
-
     def form_valid(self, form):
         action = self.request.POST.get('action')        
-        
+        content = form.cleaned_data.get('content')
         bloger = Bloger.objects.get(user__username=self.request.user)
         post = form.save(commit=False)
+        post.text_content = content
         post.bloger = bloger
         post.pub_date = datetime.now()
-        
         if action == 'save':
             post.is_publish = False
         else:
             post.is_publish = True
-        
         post.save()
-        
         return super().form_valid(form)
+
 
 class HomeView(ListView):
     model = Post
@@ -66,6 +63,13 @@ class HomeView(ListView):
     def get_queryset(self):
         ojb =  Bloger.objects.all()
         return Post.objects.filter(is_publish=True)
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            user = Bloger.objects.get(user__username=self.request.user)
+            context['user'] =  user
+        return context
 
 class TagView(ListView):
     model =Tag
@@ -86,17 +90,28 @@ class TagView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'post_view.html'
-    context_object_name = 'post'
 
+
+    def get_object(self, queryset = None):
+        slug = self.kwargs.get('slug')
+        return self.model.objects.get(slug=slug)
+
+    def get_bloger(self):
+        return Bloger.objects.get(user=self.request.user)
+    
     def get_context_data(self, **kwargs):
-        slug = self.kwargs['slug']
-        post = self.model.objects.get(slug=slug)
-        post.views = post.views + 1
-        post.save()
         
         context = super().get_context_data(**kwargs)
-        context['post'] = post
+        slug = self.kwargs['slug']
+        post = self.get_object()
         
+        # Get No of vist to post only other user not author
+        if str(post.bloger) != str(self.request.user) :
+            post.views = post.views + 1
+            post.save()
+            context['post'] = post        
+        
+        # User Activity
         recent_activity = self.request.session.get('recent_post')
         if slug not in recent_activity:
             recent_activity.append(slug)
@@ -104,7 +119,24 @@ class PostDetailView(DetailView):
         else:
             self.request.session['recent_posts'] = ""
         
+        # get all comments for particuler post
+        context['all_comments'] = post.comments.all()
+        cm = context.get('all_comments')
+        for c in cm:
+            print(c.bloger.profile_image.url)
+        context['commentform'] = CommentForm()
         return context
+    
+    def post(self,request,*args,**kwargs):
+        commentForm = CommentForm(request.POST)
+        current_post = self.get_object()
+
+        if commentForm.is_valid():
+            comment = commentForm.save(commit=False)
+            comment.post = self.get_object()
+            comment.bloger = self.get_bloger()
+            comment.save()
+        return redirect('post_view', slug=self.get_object().slug)
 
 # def post(request,slug):
 #     post = Post.objects.get(slug_fiedl=slug)
@@ -144,5 +176,4 @@ class Loginview(LoginView):
 
 
 class Logoutview(LogoutView):
-    next_page = '/'
-
+    next_page = '/'    

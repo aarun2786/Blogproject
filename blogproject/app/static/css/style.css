@@ -15,6 +15,7 @@ body {
         "nav nav"
         "aside main";
     position: fixed;
+    grid-auto-flow:row  dense;
 }
 /*----------------NavBar------------------------------------------------------------*/
 nav {
@@ -24,7 +25,7 @@ nav {
     display: flex;
     align-items: center;
     padding: 10px;
-    overflow: hidden;
+    position: relative;
 }
 .fa-bars{
     display: none;
@@ -48,24 +49,57 @@ nav .navlog{
 .nav-srch .nav-srch-btn{
     display: none;
 }
+.nav-btn{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 10px;
 
+}
 nav .nav-btn,.nav-srch{
     margin-left: auto;
 }
-.nav-btn{
-    padding-left: 10px;
+.nav-btn img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    
+}
+.nav-btn .user-menu{
+    position: absolute;
+    z-index: 5;
+    display: none;
+    flex-direction: column;
+    width: 250px;;
+    overflow: hidden;
+    max-height: auto;
+    top: 100%;
+    border: 2px solid darkblue;
+    background: whitesmoke;
+    right:2%;
+    border-radius: 5px;
+    padding: 20px;
+}
+.nav-btn .close{
     display: flex;
-    gap: 10px;
-    flex-wrap: nowrap;
-    text-wrap:nowrap;
+}
+.user-menu .user{
+    display: block;
+    grid-template-columns: 50px auto;
+    grid-template-rows: 20ox 20px;
+}
+.user-menu a{
+    padding: 5px;
+    text-decoration: none;
+}
+.user-menu a:hover{
+    background: lightcoral;
 }
 /*----------------Main------------------------------------------------------------*/
 main {
     /* grid-area: main; */
     overflow: auto;
     padding: 15px;
-    
-
 }
 
 
@@ -87,22 +121,25 @@ main {
 
 /*----------------Post Card------------------------------------------------------------*/
 .post-grid {
-    margin: 30px;
-    column-count: 3;
-    gap: 15px;
-    
-
+    columns: 300px;
+    column-gap: 10px;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
 }
-.post-card {
+ .post-link{
+    text-decoration: none;
+    z-index: 5;
+    cursor: pointer;
+}
+.post-grid .post-card{
     border: 1px solid gray;
-    overflow: hidden;
-    width: 100%;
-    margin: 0px 0px 20px 0px;
     max-width: 350px;
-    justify-self: center;
-    height:100%;
-    align-self:left;
-    break-inside:avoid;
+    overflow: hidden;
+    break-inside: avoid;
+    width:100%;
+    height: 100%;
+    margin-bottom: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -115,29 +152,26 @@ main {
     object-fit:fill;
     aspect-ratio: 1/1;
 }
-.post-card .title{
-    font-weight: bolder;
-    font-size: 20px;
-    height: 100%;
-    overflow:hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    max-height: 60px;
-    padding: 0 10px;
-}
 .post-card .title-link{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    padding:0 10px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     text-decoration: none;
-    color: rgb(49, 109, 206);
+    font-size: larger;
+    font-weight: 700;
+    margin-top: 5px;
 }
+
 .post-card .post-card-content{
     overflow: hidden;
-    margin: 0px 10px;
+    padding:0 10px;
+    text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    height: 100%;
-    max-height: 70px;
+    -webkit-line-clamp: 3;
 }
 .post-card .post-detail{
     display: grid;
@@ -171,25 +205,81 @@ main {
     height: 50px;
     
 }
+.post-card .post-tag{
+    background-color: black;
+    text-decoration: none;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+    margin-right: 2px;
+}
+.post-card .tag{
+    margin-top:8px ;
+}
 .post-card .bttom :last-child{
     margin-left: auto;
 }
 .view-count img{
     margin-right: 2px;
 }
+
 /*----------------------------------------Post View---------------------------------------------*/
 .post-view{
     width:100%;
     max-width: 950px;
     padding: 10px;
-    background-color: azure;
+    background: whitesmoke;
 }
 .post-view img{
     width: 100%;
     height: 100%;
 }
 
+/*----------------------------------------Post View---------------------------------------------*/
+.commentForm {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.commentForm form{ 
+}
+.commentForm .CmtForm{
+    height: 30px;
+    font-family: 'Roboto', Arial, sans-serif;
+    outline-color: blue;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    
+}
+.comments-box{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+.comments-head{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    
+}
+.comments-head .profile-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    margin-right: 5px;
 
+}
+.comments-head img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 /*-----------------------------------------------media query -------------------------------*/
 @media screen and (min-width: 1030px) {
     aside {
@@ -231,7 +321,7 @@ main {
     .post-grid {
         column-count: 1;
     }
-    .form-control{
+    .nav-srch .form-control{
         display: none;
     }
     .nav-srch .nav-srch-btn{
@@ -281,6 +371,7 @@ aside {
     background-color: whitesmoke;
     border-right: 1px solid gray;
     padding: 5px;
+    z-index: 3;
 }
 aside .dropdown,.recent_post,.links{
     background: whitesmoke;
@@ -423,3 +514,61 @@ aside .dropdown,.recent_post,.links{
 
 }
 
+.profile-box{ 
+   display: grid;
+   grid-template-columns: 1fr;
+   row-gap: 5px;
+   grid-template-rows: 300px 100px 1fr;
+}
+.profile-box .user-profile{
+    grid-row: 1;
+    display: flex;
+    position: relative;
+}
+.user-profile .user-back{
+
+    object-fit: fill;
+    width: 100%;
+    height: 250px;
+}
+.user-profile .user-pic{
+    position: absolute;
+    width:150px;
+    height: 150px;
+    border-radius: 15px;
+    bottom: 0;
+    margin-left: 30px;
+}
+.profile-box .user-description{
+    grid-row: 2;
+    padding: 5px;
+    text-wrap: wrap;
+    overflow:hidden;
+    word-break: break-all;
+}
+
+.profile-box .user-activity{
+    padding: 15px;
+}
+.user-activity .activity-link{
+    display: inline-flex;
+    gap: 15px;
+    list-style-type: none;
+}
+.activity-link button{
+    background: red;
+    color: white;
+    border: 0 ;
+    padding: 0.4em;
+    font-size: large;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.user-activity .post-grid{
+    margin-top: 20px;
+}
+
+.comment-grid{
+    display: block;
+    margin-bottom: 10px;
+}

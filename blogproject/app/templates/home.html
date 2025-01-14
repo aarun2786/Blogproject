@@ -8,17 +8,23 @@
         <button class="nav-srch-btn btn btn-outline-primary " ><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
     <div class="nav-btn" >
-        {% if user.is_authenticated %}
+        {% if user %}
             <a href="{% url 'create-post' %}">Create</a>
-            <a href="{% url 'create-post' %}">{{request.user.username}}</a>
-            <form action="{% url 'logout' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn bg-info">Logout</button>
-        </form>
-
-        {% else %}
-            <button class="btn bg-info"> <a href="{% url 'login' %}" >Login</a></button>
-            <button class="btn bg-info"> <a href="{% url 'signup' %}" >Signup</a></button>
+            <img id="nav-img" class="" src="{{ user.profile_image.url }}" alt="" >
+            <div class="user-menu" id="userMenu" >
+                <a href="{% url 'profile_view' %}" >View profile</a>
+                <a href="{% url 'create-post' %}">Create</a>
+                <a href="{% url 'create-post' %}">Create</a>
+                <a href="">
+                    <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button style="width: 100%;" type="submit">Logout</button>
+                    </form>
+                </a>
+            </div>
+            {% else %}
+            <a  href="{% url 'login' %}" ><button class="btn bg-warning" >Login </button></a>
+            <a  href="{% url 'signup' %}" ><button class="btn bg-danger" >Sign up </button></a>
         {% endif %}
     </div>
 {% endblock %}
@@ -30,31 +36,31 @@
 
 
 {% block main %}
-    
+
     <div class="post-grid" >
-    {% for post in posts %}
-    {{post.profile_image.url}}
-    <div class="post-card">
-        <div class="main-content" style="display: none;">{{ post.content|safe}}</div>
-        <div class="post-detail" >
-            <img src="{{post.bloger.profile_image.url}}" alt="">
-            <p class="bloger-name" >{{post.bloger}}</p>
-            <p id="pub_date" class="fs-6 text " pub_date="{{post.pub_date|date:'Y-m-d H:i:s'}}"></p>
-        </div>
-        <div class="tag" >
-            {% for tag in post.tag.all %}
-                <a href="{% url 'tag' tag=tag %}">{{tag}}</a>
-            {% endfor %}
-        </div>
-        <a class="title-link" href="{% url 'post_view' slug=post.slug %}"><div class="title">{{post.title}}</div></a>
-        <div class="bttom" >
-            <div class="" ><img class="me-1" src="{% static 'assets/views.svg' %}" alt="view">{{post.views}}</div>
-            <div class="" ><img class="me-1" src="{% static 'assets/comment.svg' %}" alt="view">{{post.views}}</div>
-            <div class="" ><img class="me-1" src="{% static 'assets/like.svg' %}" alt="view">{{post.views}}</div>
-        </div>
+        {% for post in posts %}
+                <div class="post-card"  >
+                        <div class="main-content" style="display: none;">{{ post.content|safe}}</div>
+                        <div class="post-detail" >
+                            <img src="{{post.bloger.profile_image.url}}" alt="">
+                            <p class="bloger-name" >{{post.bloger}}</p>
+                            <p id="pub_date" class="fs-6 text " pub_date="{{post.pub_date|date:'Y-m-d H:i:s'}}"></p>
+                        </div>
+                        <div class="tag" >
+                            {% for tag in post.tag.all %}
+                                <a class="post-tag" href="{% url 'tag' tag=tag %}">{{tag}}</a>
+                            {% endfor %}
+                        </div>
+                        <a class="title-link" href="{% url 'post_view' slug=post.slug %}" >{{post.title}}</a>
+                        <div class="bttom" >
+                            <div class="" ><img class="me-1" src="{% static 'assets/views.svg' %}" alt="view">{{post.views}}</div>
+                            <div class="" ><img class="me-1" src="{% static 'assets/comment.svg' %}" alt="view">{{post.count_comments}}</div>
+                            <div class="" ><img class="me-1" src="{% static 'assets/like.svg' %}" alt="view">{{post.views}}</div>
+                        </div> 
+                </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    </div>
+
 {% endblock %}
 
 

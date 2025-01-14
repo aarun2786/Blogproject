@@ -2,7 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from bs4 import BeautifulSoup
+from django.utils.safestring import SafeText
 
 def main():
     """Run administrative tasks."""
@@ -20,3 +21,16 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+
+# content = '&lt;font color="#000000" style="background-color: rgb(0, 0, 0);"&gt;asdfsadfsd&lt;/font&gt;&lt;font color="#000000" style=""&gt;&nbsp; &nbsp;&lt;/font&gt;&lt;font color="#9c00ff"&gt;asdlfjkasld&lt;/font&gt;'
+# soup = BeautifulSoup(content, 'html.parser')
+# for font_tag in soup.find_all('font'):
+#     color = font_tag.get('color')
+#     style = font_tag.get('style')
+#     if color or style:
+#         new_tag = soup.new_tag('span', style=f'color: {color};background-color:{style}')
+#         new_tag.string = font_tag.string
+#         font_tag.replace_with(new_tag)
+
+# print(str(soup))

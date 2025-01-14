@@ -25,7 +25,7 @@ function cardDesign(cardClass){
         }
 
         // Move the first text element into the postContent container
-        const text = mainContent.querySelectorAll('p');
+        const text = mainContent.querySelectorAll('p,i,span');
              for (let i = 0; i<=4; i++){
                 let textNode = document.createTextNode(text[i]);
                 if (textNode.textContent !== "undefined" ){
@@ -38,7 +38,7 @@ function cardDesign(cardClass){
   
         post.insertBefore(postContent,post.children[index]);
         
-        // Check if any image not postcard
+        // Check if any images not in postcard
         if (! image && post.className === "post-card" ){
             post.style.height = "auto"
         }
@@ -132,3 +132,23 @@ asideTagBtn.addEventListener('click', () => hide(tags,'flex'))
 let post = document.getElementById('as-post')
 let asideRePstBtn = document.getElementById('aside-repost-btn')
 asideRePstBtn.addEventListener('click', () => hide(post,'flex'))
+
+function loggelMenu(element){
+    element.classList.toggle('close')
+}
+
+let navImg = document.getElementById("nav-img")
+let navUser = document.getElementById('userMenu')
+navImg.addEventListener('click',function(){
+    loggelMenu(navUser)
+})
+
+var  tabcontent = document.getElementsByClassName('tab-content')
+
+function ToggelTab(i){
+    for(let i = 0; i < tabcontent.length; i++){
+        tabcontent[i].style.display = 'none'
+    }
+    tabcontent[i].style.display = 'block'
+}
+ToggelTab(0)

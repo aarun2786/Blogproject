@@ -13,6 +13,34 @@
     <h2>{{post.title}}</h2>
     <p>{{post.bloger}}</p>
     <p class="fw-bold">Published: {{post.pub_date|date:"Y-m-d"}}</p>
-    <p>{{post.content|safe}}</p>
+    <p  id="content" style="display: block;" >{{post.content|safe}}</p>
+
+    <div class="commentForm">
+        <p class="fw-bold fs-3" >Leave a Comment</p>
+        <form  action="" method="post">
+            {% csrf_token %}
+            {{commentform.comment}}
+            <button class="btn bg-warning" type="submit">Comment</button>
+        </form>
+    </div>
+    <p class="fw-bold fs-3" >Comments</p>
+    {% if all_comments %}
+        {% for comment in all_comments %}
+            <div class="comments-box" >
+                <div class="comments-head" >
+                    <a class="profile-link" href="">
+                        <img src="{{comment.bloger.profile_image.url}}" alt="">
+                        <span>{{comment.bloger}}</span>
+                    </a>
+                    <span>{{comment.pub_date|date:"Y-m-d"}}</span>
+                </div>
+                <p>{{comment.comment}}</p> 
+            </div>
+        {% endfor %}
+    {% else %}
+        no comment
+    {% endif %}
 </div>
+
+
 {% endblock %}
